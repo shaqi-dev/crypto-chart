@@ -1,7 +1,12 @@
 import { FC } from 'react'
+import Chart from './components/Chart'
 
 const App: FC = () => {
-  return <div>Text</div>
+  return (
+    <div>
+      <Chart />
+    </div>
+  )
 }
 
 export default App
