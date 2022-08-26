@@ -6,11 +6,3 @@ export interface Transaction {
   maxGasPrice: number
   medianGasPrice: number
 }
-
-enum NetworkType {
-  ETHEREUM = 'ethereum',
-}
-
-export type ChartData = {
-  [key in NetworkType]: Transaction[]
-}

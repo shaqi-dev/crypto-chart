@@ -3,7 +3,7 @@ import Chart from './components/Chart'
 
 const App: FC = () => {
   return (
-    <div>
+    <div className="flex min-h-screen items-center justify-center">
       <Chart />
     </div>
   )
