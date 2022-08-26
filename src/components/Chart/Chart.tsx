@@ -11,8 +11,13 @@ import {
 } from 'recharts'
 import gasPriceData from '../../json/gas_price.json'
 import { NetworkType } from '../../types/NetworkType'
+import { Timeframe } from '../../types/Timeframe'
 
-const Chart: FC = () => {
+interface ChartProps {
+  timeframe: Timeframe
+}
+
+const Chart: FC<ChartProps> = () => {
   const [networkData] = useState(gasPriceData)
 
   return (
