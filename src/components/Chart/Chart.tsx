@@ -17,7 +17,13 @@ const Chart: FC<ChartProps> = () => {
   return (
     <div>
       <LineChart width={600} height={400} data={chartData}>
-        <Line type="monotone" dataKey="gasPrice" stroke="#8884d8" />
+        <Line
+          isAnimationActive={false}
+          dot={false}
+          type="monotone"
+          dataKey="gasPrice"
+          stroke="#8884d8"
+        />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <XAxis dataKey="time" minTickGap={40} tickFormatter={timeFormatter} />
         <YAxis />
