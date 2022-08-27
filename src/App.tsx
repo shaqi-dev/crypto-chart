@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react'
 import Chart from './components/Chart'
 import { filterDay, filterWeek } from './utils/ETHTransactionFilters'
-import gasPriceData from './json/gas_price.json'
 import { Timeframe } from './types/Timeframe'
 import { ChartDataItem } from './types/ChartDataItem'
+import gasPriceData from './json/gas_price.json'
 
 const reducedGasPriceData: ChartDataItem[] = gasPriceData.ethereum.transactions.map(
   ({ time, gasPrice, gasValue, average, maxGasPrice, medianGasPrice }) => ({

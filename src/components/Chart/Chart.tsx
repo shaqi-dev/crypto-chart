@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Brush } from 'recharts'
-import { ChartDataItem } from '../../types/ChartDataItem'
 import { timeFormatter } from '../../utils/timeFormatter'
+import { ChartDataItem } from '../../types/ChartDataItem'
 
 interface ChartProps {
   chartData: ChartDataItem[]
