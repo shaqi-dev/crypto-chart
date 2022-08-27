@@ -9,6 +9,8 @@ interface ChartProps {
 }
 
 const Chart: FC<ChartProps> = ({ chartData, brushStartIndex = 0 }) => {
+  if (!chartData.length) return <p>Not enough chart data</p>
+
   return (
     <LineChart width={600} height={400} data={chartData}>
       <Line

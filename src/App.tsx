@@ -1,22 +1,41 @@
 import { FC, useEffect, useState } from 'react'
 import Chart from './components/Chart'
+import { getNetworkData } from './api/getNetworkData'
+import { API_ETH_NETWORK } from './api/endpoints'
 import { filterDay, filterWeek } from './utils/ETHTransactionFilters'
+import { reduceETHTransactions } from './utils/reduceETHTransactions'
 import { Timeframe } from './types/Timeframe'
 import { ChartDataItem } from './types/ChartDataItem'
-import gasPriceData from './json/gas_price.json'
-
-const reducedGasPriceData: ChartDataItem[] = gasPriceData.ethereum.transactions.map(
-  ({ time, gasPrice, gasValue, average, maxGasPrice, medianGasPrice }) => ({
-    time,
-    price: gasPrice + gasValue + average + average + maxGasPrice + medianGasPrice,
-  }),
-)
+import { ETHTransaction } from './types/Transactions'
 
 const App: FC = () => {
-  const [transactions] = useState(reducedGasPriceData)
+  const [isLoading, setIsLoading] = useState(true)
   const [timeframe, setTimeframe] = useState<Timeframe>(Timeframe.H1)
+  const [transactions, setTransactions] = useState<ChartDataItem[]>([])
   const [chartData, setChartData] = useState<ChartDataItem[]>(transactions.slice(0, 200))
   const [brushStartIndex, setBrushStartIndex] = useState<number>(0)
+
+  useEffect(() => {
+    const fetchTransactions = async (): Promise<void> => {
+      setIsLoading(true)
+      try {
+        const { data, error } = await getNetworkData<ETHTransaction>(API_ETH_NETWORK)
+
+        if (error) {
+          console.error(error)
+        }
+
+        if (data) {
+          setTransactions(reduceETHTransactions(data.ethereum.transactions))
+        }
+      } catch (err) {
+        console.error(err)
+      }
+      setIsLoading(false)
+    }
+
+    fetchTransactions()
+  }, [])
 
   useEffect(() => {
     let data: ChartDataItem[] = []
@@ -51,7 +70,8 @@ const App: FC = () => {
         </select>
       </div>
 
-      <Chart chartData={chartData} brushStartIndex={brushStartIndex} />
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && <Chart chartData={chartData} brushStartIndex={brushStartIndex} />}
     </div>
   )
 }
