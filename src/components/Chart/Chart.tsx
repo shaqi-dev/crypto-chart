@@ -21,7 +21,7 @@ const Chart: FC<ChartProps> = ({ chartData, brushStartIndex = 0 }) => {
       <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
       <XAxis dataKey="time" minTickGap={40} tickFormatter={timeFormatter} />
       <YAxis />
-      <Tooltip />
+      <Tooltip formatter={(value: number): number => +value.toFixed(2)} />
       <Brush dataKey="time" startIndex={brushStartIndex} />
     </LineChart>
   )
