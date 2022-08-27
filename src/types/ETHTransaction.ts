@@ -1,4 +1,4 @@
-export interface EthereumTransaction {
+export interface ETHTransaction {
   time: string
   gasPrice: number
   gasValue: number

@@ -1,23 +1,24 @@
-export const timeFormatter = (value: string): string => {
-  const time = value.slice(-5)
-  const date = value.slice(0, 8)
-  const year = date.slice(0, 2)
-  const month = date.slice(3, 5)
-  const day = date.slice(-2)
-  const monthShort = Intl.DateTimeFormat('en', { month: 'short' }).format(new Date(month))
-  const yearLong = +year[0] > 5 ? `19${year}` : `20${year}`
+import { getETHTransactionDate } from './getETHTransactionDate'
 
-  if (time !== '00:00') {
-    return time
+export const timeFormatter = (time: string): string => {
+  const date = getETHTransactionDate(time)
+  const minutes = date.getMinutes().toLocaleString('en', { minimumIntegerDigits: 2 })
+  const hours = date.getHours().toLocaleString('en', { minimumIntegerDigits: 2 })
+  const day = date.getDate()
+  const year = date.getFullYear()
+  const month = date.toLocaleString('en', { month: 'short' })
+
+  if (minutes !== '00' || hours !== '00') {
+    return `${hours}:${minutes}`
   }
 
-  if (day !== '01') {
-    return day.replace('0', '')
+  if (day !== 1) {
+    return day.toString()
   }
 
-  if (month !== '01') {
-    return monthShort
+  if (month !== 'Jan') {
+    return month
   }
 
-  return yearLong
+  return year.toString()
 }
