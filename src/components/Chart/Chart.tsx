@@ -5,9 +5,10 @@ import { timeFormatter } from '../../utils/timeFormatter'
 
 interface ChartProps {
   chartData: ChartDataItem[]
+  brushStartIndex?: number
 }
 
-const Chart: FC<ChartProps> = ({ chartData }) => {
+const Chart: FC<ChartProps> = ({ chartData, brushStartIndex = 0 }) => {
   return (
     <LineChart width={600} height={400} data={chartData}>
       <Line
@@ -21,7 +22,7 @@ const Chart: FC<ChartProps> = ({ chartData }) => {
       <XAxis dataKey="time" minTickGap={40} tickFormatter={timeFormatter} />
       <YAxis />
       <Tooltip />
-      <Brush dataKey="time" startIndex={chartData.length - 21} />
+      <Brush dataKey="time" startIndex={brushStartIndex} />
     </LineChart>
   )
 }

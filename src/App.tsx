@@ -16,16 +16,20 @@ const App: FC = () => {
   const [transactions] = useState(reducedGasPriceData)
   const [timeframe, setTimeframe] = useState<Timeframe>(Timeframe.H1)
   const [chartData, setChartData] = useState<ChartDataItem[]>(transactions.slice(0, 200))
+  const [brushStartIndex, setBrushStartIndex] = useState<number>(0)
 
   useEffect(() => {
     let data: ChartDataItem[] = []
 
     if (timeframe === Timeframe.H1) {
-      data = transactions.slice(0, 200)
+      data = transactions.slice(-500)
+      setBrushStartIndex(data.length - 101)
     } else if (timeframe === Timeframe.D1) {
       data = transactions.filter(filterDay)
+      setBrushStartIndex(data.length - 51)
     } else if (timeframe === Timeframe.W1) {
       data = transactions.filter(filterWeek)
+      setBrushStartIndex(0)
     }
 
     setChartData(data)
@@ -47,7 +51,7 @@ const App: FC = () => {
         </select>
       </div>
 
-      <Chart chartData={chartData} />
+      <Chart chartData={chartData} brushStartIndex={brushStartIndex} />
     </div>
   )
 }
